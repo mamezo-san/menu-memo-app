@@ -1,8 +1,23 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    //デフォルトだと以下が記入されている　読み込みはできるが、書き込みは全てできない状態
+    // match /{document=**} {
+    //   allow read, write: if false;
+
+    //usersコレクションに対して書き込み可にする
+    //{}で囲むと可変する物が入る
+    match /users/{userId}{
+      //読み込みできるのはログインしているもののみ可能　最後は;で閉じる
+      allow read: if request.auth.uid !== null;
+      //signupでログインしていなくても書き込みがしたいのでそのままなんでもおっけいする
+      allow create;
+      //updateはログインしているuidが上記のuserId(db)と同じ場合のみできるとしている
+      allow update: if request.auth.uid == userId;
+      allow delete: if request.auth.uid == userId;
     }
   }
 }
+
+//大事　rulesに書き込みを行ったらfirebase deploy -- only firestore:rulesでrulesのみdeployできる
+// deployしないと反映されない

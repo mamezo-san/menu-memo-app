@@ -2,6 +2,8 @@ const initialState = {
     users:{
         uid: "",
         username: "",
+        email: "",
+        password: "",
         isSignedIn: false
     },
     menus:{
