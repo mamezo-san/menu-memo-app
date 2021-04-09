@@ -2,6 +2,7 @@ import React,{useState,useCallback} from 'react';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../reducks/users/operetions'; 
 import { TextInput,PrimaryButton } from '../components/UIkit/index';
+import { push } from 'connected-react-router';
 
 
 const SignUp = () => {
@@ -15,19 +16,19 @@ const SignUp = () => {
 
     
     const inputUsername = useCallback((event) => {
-        setUsername(event.target.event)
+        setUsername(event.target.value)
     },[setUsername]);
 
     const inputEmail = useCallback((event) => {
-    setEmail(event.target.event)
+        setEmail(event.target.value)
     },[setEmail]);
 
     const inputPassword = useCallback((event) => {
-        setPassword(event.target.event)
+        setPassword(event.target.value)
     },[setPassword]);
 
     const inputConfirmPassword = useCallback((event) => {
-        setConfirmPassword(event.target.event)
+        setConfirmPassword(event.target.value)
     },[setConfirmPassword]);
     
   return(

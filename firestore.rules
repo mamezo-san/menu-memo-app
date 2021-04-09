@@ -7,9 +7,9 @@ service cloud.firestore {
 
     //usersコレクションに対して書き込み可にする
     //{}で囲むと可変する物が入る
-    match /users/{userId}{
+    match /users/{userId} {
       //読み込みできるのはログインしているもののみ可能　最後は;で閉じる
-      allow read: if request.auth.uid !== null;
+      allow read: if request.auth.uid != null;
       //signupでログインしていなくても書き込みがしたいのでそのままなんでもおっけいする
       allow create;
       //updateはログインしているuidが上記のuserId(db)と同じ場合のみできるとしている

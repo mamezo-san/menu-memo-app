@@ -5,25 +5,25 @@ import { push } from 'connected-react-router';
 import { auth,db,FirebaseTimestamp } from '../../firebase/index';
 
 //基本的な文法　関数を書く
-export const signIn = (email,password) => {
+// export const signIn = (email,password) => {
     //引数のdispatchでactionsを呼び出している
     //getStateで現在のstateの値を呼び出すことができる
-    return async (dispatch,getState) => {
-        const state = getState();
-        const isSignedIn = state.users.isSignedIn
+    // return async (dispatch,getState) => {
+    //     const state = getState();
+    //     const isSignedIn = state.users.isSignedIn
 
         //if(!~)で~じゃなければ
-        if(!isSignedIn){
-            //emailSignINに実際のfirebaseのログイン関数を書く
-            const userData = await emailSignIn(email,password)
-            dispatch(signInAction({
-                isSignedIn: true,
-                uid: "00001",
-                username: "takuya",
-            }))
-        }
-    }
-}
+//         if(!isSignedIn){
+//             //emailSignINに実際のfirebaseのログイン関数を書く
+//             const userData = await emailSignIn(email,password)
+//             dispatch(signInAction({
+//                 isSignedIn: true,
+//                 uid: "00001",
+//                 username: "takuya",
+//             }))
+//         }
+//     }
+// }
 
 export const signUp = (username,email,password,confirmPassword) => {
     return async (dispatch) => {

@@ -1,9 +1,8 @@
 const initialState = {
     users:{
+        role: "",
         uid: "",
         username: "",
-        email: "",
-        password: "",
         isSignedIn: false
     },
     menus:{

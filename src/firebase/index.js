@@ -15,4 +15,4 @@ export const db = firebase.firestore();
 export const storage = firebase.storage();
 export const functions = firebase.functions();
 //作成した日時などを作りたい時に使う
-export const FirebaseTimestamp = firebase.firestore.Timestamp();
+export const FirebaseTimestamp = firebase.firestore.Timestamp;
