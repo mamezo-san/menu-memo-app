@@ -1,6 +1,6 @@
 //複雑な処理を任せる　redux-thunkで非同期処理を行う場所 actionsを呼び出す
 
-import { signInAction } from "./actions";
+import { signInAction, signOutAction } from "./actions";
 import { push } from 'connected-react-router';
 import { auth,db,FirebaseTimestamp } from '../../firebase/index';
 
@@ -25,6 +25,69 @@ import { auth,db,FirebaseTimestamp } from '../../firebase/index';
 //     }
 // }
 
+//認証Auth
+export const listenAuthState = () => {
+    return async (dispatch) => {
+        //auth.onAuthStateChangedでログインしているかどうかを監視している
+        return auth.onAuthStateChanged(user => {
+            if(user){
+                const uid = user.uid
+                //dbの中のusersに入っているuidをとってくる　それはsnapshotに入る
+                db.collection('users').doc(uid).get()
+                    .then(snapshot => {
+                        const data = snapshot.data()
+
+                        //dispatchでactionのsignInActionにpayloadを渡している
+                        dispatch(signInAction({
+                            uid: uid,
+                            isSignedInd: true,
+                            role: data.role,
+                            username: data.username
+                            }))
+                })
+            //userがいなかった場合(ログインしていない)はログイン画面に切り替える
+            }else{
+                dispatch(push('/signin'))
+            }
+        })
+    }
+}
+
+//signin
+export const signIn = (email,password) => {
+    return async (dispatch) => {
+        //validate
+        if(email === "" || password === "" ){
+            alert ("見入力の欄があります")
+            return false
+        }
+        return auth.signInWithEmailAndPassword(email,password)
+            .then(result => {
+                const user = result.user
+
+                if(user){
+                    const uid = user.uid
+                    //dbの中のusersに入っているuidをとってくる　それはsnapshotに入る
+                    db.collection('users').doc(uid).get()
+                        .then(snapshot => {
+                            const data = snapshot.data()
+
+                            //dispatchでactionのsignInActionにpayloadを渡している
+                            dispatch(signInAction({
+                                uid: uid,
+                                isSignedInd: true,
+                                role: data.role,
+                                username: data.username
+                            }))
+
+                            dispatch(push('/'))
+                        })
+                }
+            })
+    }
+} 
+
+//signup
 export const signUp = (username,email,password,confirmPassword) => {
     return async (dispatch) => {
         //validate 本当はバリデートを関数で定義して使い回すためのちに改善
@@ -66,5 +129,33 @@ export const signUp = (username,email,password,confirmPassword) => {
                         })
                 }
             })
+    }
+}
+
+//signout
+export const signOut = () => {
+    return async (dispatch) => {
+        return auth.signOut()
+            .then(() => {
+                dispatch(signOutAction());
+                dispatch(push('/signin'))
+            })
+    }
+}
+
+//passwordReset
+export const reset = (email) => {
+    return async (dispatch) => {
+        if(email === ""){
+            alert("メールアドレスを入力してください")
+        }else{
+            return auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    alert('メールアドレスにパスワードリセットのメールをお送りしました')
+                    dispatch(push('/signin'))
+                }).catch(() => {
+                    alert('パスワードリセットに失敗しました。再度お試しください')
+                })
+        }
     }
 }

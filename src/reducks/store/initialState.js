@@ -6,8 +6,8 @@ const initialState = {
         isSignedIn: false
     },
     menus:{
-        mid: "",
-        menuname: ""
+        //ここはなぜ配列だけでいいかわからない
+       list: []
     }
 };
 

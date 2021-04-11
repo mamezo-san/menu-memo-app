@@ -3,6 +3,16 @@ import { createSelector } from 'reselect';
 //(state)は全体のstateのこと
 const usersSelector = (state) => state.users;
 
+export const getIsSignedIn = createSelector(
+    [usersSelector],
+    state => state.isSignedIn
+)
+
+export const getUsername = createSelector(
+    [usersSelector],
+    state => state.username
+)
+
 export const getUserId = createSelector(
     //引数を２とる
     [usersSelector],
