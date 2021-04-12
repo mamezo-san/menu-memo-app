@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Route,Switch } from 'react-router';
-import { Home,SignIn,SignUp,Reset,MenusEdit } from './templates/index';
+import { MenusList,SignIn,SignUp,Reset,MenusEdit } from './templates/index';
 import Auth from './Auth';
 
 const  Router = () => {
@@ -15,8 +15,9 @@ const  Router = () => {
 
         {/*認証後しか行わさせたくいない画面をAuthで囲む*/}
         <Auth>
-          <Route exact path="(/)?" component={Home} />
-          <Route exact path="/menus/edit" component={MenusEdit} />
+          <Route exact path="(/)?" component={MenusList} />
+          {/*editの後に変数(/:id)?をつけることで、idがあったらすでにあるものの編集画面にいき、idなかったら新規作成ページにいく */}
+          <Route path="/menus/edit(/:id)?" component={MenusEdit} />
         </Auth>
     </Switch>
   );
