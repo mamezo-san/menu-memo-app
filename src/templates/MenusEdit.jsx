@@ -69,6 +69,7 @@ const MenusEdit = () => {
             fullWidth={true} rows={1} value={name} multiline={false}
             type={"text"} label={"メニュー名"} required={true} onChange={inputName}
            />
+           <div className="space-small" />
             <TextInput 
             fullWidth={true} rows={3} value={description} multiline={true}
             type={"text"} label={"説明"} required={true} onChange={inputDescription}
@@ -81,6 +82,7 @@ const MenusEdit = () => {
             type={"text"} label={"メニュー名"} required={true} onChange={inputName}
            />  */}
       </div>
+      <div className="space-large" />
       <div>
           <PrimaryButton label={"メニューを登録する"} onClick={() => dispatch(saveMenus(id,name,description,category,images))} />
       </div>

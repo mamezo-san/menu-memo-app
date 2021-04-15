@@ -67,9 +67,9 @@ export const saveMenus = (id,name,description,category,images) => {
             data.created_at = timeStamp
         }
 
-        //setの第二引数に{marge: true}を渡すことで変更されたところだけを更新する
+        //setの第二引数に{merge: true}を渡すことで変更されたところだけを更新する
         //上記のidを指定してdataをdbに保存している
-        return menusRef.doc(id).set(data,{marge: true})
+        return menusRef.doc(id).set(data, {merge: true})
             .then(()=> {
                 dispatch(push('/'))
             }).catch((error) => {

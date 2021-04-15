@@ -4,3 +4,4 @@ export { default as SignIn } from './SignIn';
 export { default as Reset } from './Reset';
 export { default as MenusEdit } from './MenusEdit';
 export { default as MenusList } from './MenusList';
+export { default as MenusDetail } from './MenusDetail';

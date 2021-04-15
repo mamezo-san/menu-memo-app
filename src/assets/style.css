@@ -1,0 +1,22 @@
+.flex-menus{
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+}
+.app-padding{
+    padding: 96px 0 ;
+}
+/* space_item */
+.space-small{
+    height: 15px;
+}
+.space-medium{
+    height: 30px;
+}
+.space-large{
+    height: 45px;
+}
+
+.display-none{
+    display: none;
+}

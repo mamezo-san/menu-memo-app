@@ -4,8 +4,10 @@ import { Provider } from 'react-redux';//#
 import createStore from './reducks/store/store'; //#
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import * as History from 'history'
-import { ConnectedRouter } from 'connected-react-router'
+import * as History from 'history';
+import { ConnectedRouter } from 'connected-react-router';
+import { MuiThemeProvider } from '@material-ui/core';
+import { theme } from './assets/theme';
 
 //importしたHistoryの中のcreateBrowserHistoryがページ遷移の履歴わかる関数
 const history = History.createBrowserHistory();
@@ -21,7 +23,9 @@ ReactDOM.render(
   <Provider store={store}>
     {/* Appコンポーネントで起きたURLの変更を管理できる */}
     <ConnectedRouter history={history}>
-      <App />
+      <MuiThemeProvider theme={theme} >
+        <App />
+      </MuiThemeProvider>
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')

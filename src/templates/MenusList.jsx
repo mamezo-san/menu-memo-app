@@ -3,7 +3,7 @@ import { MenuCard } from '../components/Products/index';
 import { fetchMenus } from '../reducks/menus/operetions';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMenus } from '../reducks/menus/selectors';
-
+import { push } from 'connected-react-router';
 
 const MenusList = () => {
 
@@ -20,16 +20,21 @@ const MenusList = () => {
 
   return(
     <section>
-      <div>
+      <div className="flex-menus">
           {/*productsの数が０以上の時mapメソッドでイテレートする */}
           {menus.length > 0 && (
-              menus.map(menu=> ( //callbackの => を()にすることでjsxを使える
+              menus.map(menu　=> ( //callbackの => を()にすることでjsxを使える
                   <MenuCard 
                   key={menu.id} images={menu.images} 
                   name={menu.name} id={menu.id}
                   />
               ))
           )}
+      </div>
+      <div>
+        <button onClick={() => dispatch(push('/menus/edit'))}>
+          メニューを追加する
+        </button>
       </div>
     </section>
   )

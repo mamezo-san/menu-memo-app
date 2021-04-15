@@ -105,7 +105,7 @@ const MenuCard = (props) => {
                 </Typography>
             </div>
             {/*modalの作成 */}
-            <IconButton onClick={handleClick}>
+            <IconButton onClick={handleClick} className={classes.icon}>
                 <ExpandMoreIcon />
             </IconButton>
             {/*クリックした時に開かれるもの */}

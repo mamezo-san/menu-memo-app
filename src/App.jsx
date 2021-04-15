@@ -1,15 +1,19 @@
 import React from 'react';
 import Router from './Router';
+import { Header } from './components/Header/index';
 //CSS適用する場合はここにimport
-
+import "./assets/style.css"
 // import "./assets/reset.css"
-// import "./assets/style.css"
+
 
 const App = () => {
   return(
-    <main>
-      <Router />
-    </main>
+    <>
+      <Header />
+      <main className="app-padding">
+        <Router />
+      </main>
+    </>
   );
 };
 

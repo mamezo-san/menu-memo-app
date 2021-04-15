@@ -72,7 +72,7 @@ const ImageArea = (props) => {
                   <AddAPhotoIcon />
                     {/*inputタグを消すためのcssを指定している */}
                   <input　
-                    className='u-display-none' type="file" id="image" 
+                    className='display-none' type="file" id="image" 
                     onChange={(event)=> uploadImage(event)}  
                   />
               </label>
