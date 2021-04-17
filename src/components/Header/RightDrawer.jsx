@@ -13,8 +13,10 @@ import HistoryIcon from '@material-ui/icons/History';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { TextInput } from '../UIkit/index';
 import { push } from 'connected-react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { signOut } from '../../reducks/users/operetions';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { getUserId } from '../../reducks/users/selectors';
 
 const useStyles = makeStyles((theme)=> ({
   drawer: {
@@ -41,6 +43,10 @@ const RightDrawer = (props) => {
   const dispatch = useDispatch();
   const { container } = props;
 
+  //userId取得
+  const selector = useSelector((state) => state);
+  const userId = getUserId(selector);
+
   const[search,setSearch] = useState("");
 
   const selectMenu = (event,path) => {
@@ -50,8 +56,9 @@ const RightDrawer = (props) => {
   };
 
   const menus = [
-    { func: selectMenu, label: "メニュー登録", icon: <AddCircleIcon />, id: "addMenu", value: "/menus/edit"},
-    { func: selectMenu, label: "メニュー履歴", icon: <HistoryIcon />  , id: "history", value: "/menus/history"}
+    { func: selectMenu, label: "メニュー登録", icon: <AddCircleIcon />,       id: "addMenu", value: "/menus/edit"},
+    { func: selectMenu, label: "メニュー履歴", icon: <HistoryIcon />  ,       id: "history", value: "/menus/history"},
+    { func: selectMenu, label: "ユーザー情報", icon: <AccountCircleIcon />  , id: "account", value: "/user/" + userId}
   ];
 
   const inputSearch = useCallback((event) => {

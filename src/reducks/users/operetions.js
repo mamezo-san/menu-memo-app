@@ -159,3 +159,40 @@ export const reset = (email) => {
         }
     }
 }
+
+//user編集　firebase公式 updateProfileメソッド
+// var user = firebase.auth().currentUser;
+
+// user.updateProfile({
+//   displayName: "Jane Q. User",
+//   photoURL: "https://example.com/jane-q-user/profile.jpg"
+// }).then(function() {
+//   // Update successful.
+// }).catch(function(error) {
+//   // An error happened.
+// });
+
+export const updateUser = (userId,name,email) => {
+    return async(dispatch) => {
+        // validate
+        if(name === "" || email === ""){
+            alert("未入力の欄があります")
+            return false
+        }
+
+        const timeStamp = FirebaseTimestamp.now();
+
+        const data = {
+            name: name,
+            email: email,
+            update_at: timeStamp
+        }
+
+        return db.collection('users').doc(userId).set(data,{merge: true})
+            .then(() => {
+                dispatch(push('/'))
+            }).catch((error) => {
+                throw new Error(error)
+            })
+    }
+};

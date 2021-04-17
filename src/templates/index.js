@@ -5,3 +5,5 @@ export { default as Reset } from './Reset';
 export { default as MenusEdit } from './MenusEdit';
 export { default as MenusList } from './MenusList';
 export { default as MenusDetail } from './MenusDetail';
+export { default as UserDetail } from './UserDetail';
+export { default as UserEdit } from './UserEdit';
