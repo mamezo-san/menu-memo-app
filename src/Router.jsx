@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Route,Switch } from 'react-router';
-import { MenusList,SignIn,SignUp,Reset,MenusEdit,MenusDetail,UserDetail,UserEdit } from './templates/index';
+import { MenusList,SignIn,SignUp,Reset,MenusEdit,MenusDetail,UserDetail,UserEdit,MenusHistory } from './templates/index';
 import Auth from './Auth';
 
 const  Router = () => {
@@ -21,6 +21,7 @@ const  Router = () => {
           <Route exact path="/menus/:id" component={MenusDetail} />
           <Route exact path="/user/:id" component={UserDetail} />
           <Route exact path="/user/:id/edit" component={UserEdit} />
+          <Route exact path="/menus/history" component={MenusHistory} />
         </Auth>
     </Switch>
   );

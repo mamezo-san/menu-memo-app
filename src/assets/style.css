@@ -20,3 +20,13 @@
 .display-none{
     display: none;
 }
+.content-left{
+    float:left;
+}
+.content-right{
+    float:right;
+}
+.header-space-between{
+    display: flex;
+    justify-content: space-between;
+}

@@ -7,3 +7,4 @@ export { default as MenusList } from './MenusList';
 export { default as MenusDetail } from './MenusDetail';
 export { default as UserDetail } from './UserDetail';
 export { default as UserEdit } from './UserEdit';
+export { default as MenusHistory } from './MenusHistory';

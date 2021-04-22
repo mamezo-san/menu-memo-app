@@ -21,7 +21,7 @@ const useStyles = makeStyles({
         width: '100%'
     },
     iconButtons: {
-        margin: '0 0 0 auto'
+        margin: '0 0 0 auto',
     }
 });
 
@@ -53,7 +53,7 @@ const Header = () => {
                 {/*条件分岐でサインインしていたらHeaderIconsを表示 */}
                 {isSignedIn && (
                     <div className={classes.iconButtons}>
-                        <HeaderIcons handleDrawerTog={handleDrawerTog} />
+                        <HeaderIcons handleDrawerTog={handleDrawerTog}/>
                     </div>
                 )}
             </Toolbar>
