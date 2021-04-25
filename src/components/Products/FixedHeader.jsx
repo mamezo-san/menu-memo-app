@@ -30,7 +30,9 @@ const FixedHeader = (props) => {
 
     const menus = props.menus;
 
-    console.log(menus);
+    const dateTime = (time) => {
+        return new Date(time*1000).toLocaleDateString()
+    };
 
   return(
     <Paper className={classes.root}>
@@ -55,10 +57,10 @@ const FixedHeader = (props) => {
                                             {menu.name}
                                         </TableCell>
                                         <TableCell>
-                                            {menu.created_at.seconds}
+                                            {dateTime(menu.created_at.seconds)}
                                         </TableCell>
                                         <TableCell>
-                                            {menu.updated_at.seconds}
+                                            {dateTime(menu.updated_at.seconds)}
                                         </TableCell>
                                     </TableRow>
                                 )
