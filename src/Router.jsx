@@ -18,7 +18,7 @@ const  Router = () => {
           <Route exact path="(/)?" component={MenusList} />
           {/*editの後に変数(/:id)?をつけることで、idがあったらすでにあるものの編集画面にいき、idなかったら新規作成ページにいく */}
           <Route path="/menus/edit(/:id)?" component={MenusEdit} />
-          <Route exact path="/menus/:id" component={MenusDetail} />
+          <Route exact path="/users/:id/menus/:id" component={MenusDetail} />
           <Route exact path="/user/:id" component={UserDetail} />
           <Route exact path="/user/:id/edit" component={UserEdit} />
           <Route exact path="/menus/history" component={MenusHistory} />

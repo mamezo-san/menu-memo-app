@@ -23,7 +23,6 @@ const ImageSwiper = (props) => {
     })
 
     const images = props.images;
-
   return(
       //スプレット構文で定義したparams展開
     <Swiper {...params}>
@@ -34,7 +33,7 @@ const ImageSwiper = (props) => {
       ) :(
           images.map(image => (
              <div>
-                 <img src={image.path} alt="メニュー画像" />
+                 <img　key={image.id} src={image.path} alt="メニュー画像" />
              </div> 
           ))
       )}

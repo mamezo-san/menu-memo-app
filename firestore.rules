@@ -15,12 +15,18 @@ service cloud.firestore {
       //updateはログインしているuidが上記のuserId(db)と同じ場合のみできるとしている
       allow update: if request.auth.uid == userId;
       allow delete: if request.auth.uid == userId;
+      
+      match /menus/{menuId} {
+      allow read,write: if request.auth.uid != userId;
+      }
+
+      //おそらくここにmatch追加？
     }
 
-    match /menus/{menuId} {
-      allow read: if request.auth.uid != null;
-      allow write: if request.auth.uid != null;
-    }
+    // match /users/{userId}/menus/{menuId} {
+    //   allow read: if request.auth.uid != null;
+    //   allow write: if request.auth.uid != null;
+    // }
   }
 }
 

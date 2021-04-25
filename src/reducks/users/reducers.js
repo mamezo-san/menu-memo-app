@@ -12,6 +12,16 @@ export const UserReducers = (state=initialState.users, action) => {
             return{
                 ...action.payload
             };
+        case Actions.FETCH_MENUS:
+            return{
+                ...state,
+                menus: [...action.payload]
+            };
+        case Actions.DELETE_MENU:
+            return{
+                ...state,
+                menus: [...action.payload]
+            };
         default: 
             return state
     }

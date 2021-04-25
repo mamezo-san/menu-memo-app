@@ -1,15 +1,20 @@
 import React,{useCallback, useEffect, useState} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import{ PrimaryButton, TextInput,SelectBox } from '../components/UIkit/index';
-import { saveMenus } from '../reducks/menus/operetions';
+import { saveMenus } from '../reducks/users/operetions';
 import { ImageArea } from '../components/Products/index';
 import { db } from '../firebase/index';
+import { getUserId } from '../reducks/users/selectors';
 
 const MenusEdit = () => {
 
     const dispatch = useDispatch();
+    const selector = useSelector((state) => state);
 
-    const [name,setName] = useState(""),
+    const uid = getUserId(selector);
+
+    const [id,setId] = useState(""),
+          [name,setName] = useState(""),
           [description,setDescription] = useState(""),
           [category,setCategory] = useState(""),
           [images,setImages] = useState([]),
@@ -26,30 +31,33 @@ const MenusEdit = () => {
     //編集画面
     //urlからsplitを使って変数:idを取り出す
     //window.location.pathnameでurl
-    let id = window.location.pathname.split('/menus/edit')[1];
-
-    //urlに変数:idが入っている場合はidに変数:idを代入している
-    //=下記は編集の時
-    if(id !== ""){
-        // /を取り除いて純粋にidだけを取り出している
-        id = id.split('/')[1]
-    }
+   
 
     //編集の場合だけuseEffectを使用するので以下のif文
     useEffect(() => {
+        let id = window.location.pathname.split('/menus/edit')[1];
+        // console.log(setId);
+    
+        //urlに変数:idが入っている場合はidに変数:idを代入している
+        //=下記は編集の時
+        if(id !== ""){
+            // /を取り除いて純粋にidだけを取り出している
+            id = id.split('/')[1]
+        }
         if(id !== ""){
             //データベースのmenusの中からidが一致するものを取り出している
-            db.collection('menus').doc(id).get()
+            db.collection('users').doc(uid).collection('menus').doc(id).get()
                 .then(snapshot => {
                 //それぞれの値はsnapshotに入っているのでそれのdataをmenuに代入している
                 const data = snapshot.data();
+                setId(id);
                 setName(data.name);
                 setDescription(data.description);
                 setCategory(data.category);
                 setImages(data.images);
             })
         }
-    },[id]);
+    },[]);
 
     //SelectBoxに入るoptionsの値、実際はデータベースに保存して使う？、連想配列(objectっぽい配列)
     const categories = [
@@ -84,7 +92,8 @@ const MenusEdit = () => {
       </div>
       <div className="space-large" />
       <div>
-          <PrimaryButton label={"メニューを登録する"} onClick={() => dispatch(saveMenus(id,name,description,category,images))} />
+          <PrimaryButton label={"メニューを登録する"} onClick={() =>
+             dispatch(saveMenus(id,name,description,category,images))} />
       </div>
     </section>
   )

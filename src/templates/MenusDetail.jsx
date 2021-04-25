@@ -4,6 +4,7 @@ import { db } from '../firebase/index';
 import { makeStyles } from '@material-ui/styles';
 import HTMLReactParser from 'html-react-parser';
 import { ImageSwiper } from '../components/Products/index';
+import { getUserId } from '../reducks/users/selectors';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,20 +49,29 @@ const MenusDetail = () => {
     const classes = useStyles;
 
     const selector = useSelector((state)=> state);
+    const uid = getUserId(selector);
+
     const path = selector.router.location.pathname;
-    const id = path.split('/menus/')[1];
+    const id = path.split('/users/'+ uid + '/menus/')[1];
 
     const [menu,setMenu] = useState(null);
 
-    
-
     useEffect(() => {
-        db.collection('menus').doc(id).get()
+        db.collection('users').doc(uid).collection('menus').doc(id).get()
             .then(doc => {
                 const data = doc.data();
                 setMenu(data)
             })
     },[]);
+    
+
+    // useEffect(() => {
+    //     db.collection('users').doc(uid).collection('menus').doc(id).get()
+    //         .then(doc => {
+    //             const data = doc.data();
+    //             setMenu(data)
+    //         })
+    // },[]);
 
   return(
     <section>
@@ -74,10 +84,11 @@ const MenusDetail = () => {
                     <h2>{menu.name}</h2>
                     <div className="space-small" />
                     <p>{returnCodeToBr(menu.description)}</p>
+                    {console.log(menu.description)}
+                    {console.log(menu.images)}
                 </div>
             </div>
         )}
-
     </section>
   )
 }

@@ -6,12 +6,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Noimage from '../../assets/img/src/no_image.png';
 import { push } from 'connected-react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { deleteMenu } from '../../reducks/menus/operetions';
+import { deleteMenu } from '../../reducks/users/operetions';
+import { getUserId } from '../../reducks/users/selectors';
 
 //引数に渡しているthemeとはアプリで管理しているmaterialUiのthemeファイル,なかにprimarycolorなど
 //入っているのでそれを活用できる 書き方はcallbackに近い形で => の後に()を入れる
@@ -68,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
 
 const MenuCard = (props) => {
 
+    const selector = useSelector((state) => state);
+    const uid = getUserId(selector);
+
     //三項演算子でimagesがあるかを検証　なかったらnoimagesを活用
     const images = (props.images.length > 0 ) ? props.images : [{path: Noimage}];
 
@@ -94,11 +98,11 @@ const MenuCard = (props) => {
             //またimageURLはimagesのpathに入っている
             image={images[0].path}
             //clickすると詳細ページに飛ばす urlの指定は+とprops.idを使用する
-            onClick={() => dispatch(push('/menus/' + props.id ))}
+            onClick={() => dispatch(push('/users/' + uid + '/menus/' + props.id ))}
         />
         {/*文章が入る 今回は名前とボタン */}
         <CardContent className={classes.content} >
-            <div onClick={() => dispatch(push('/menus/' + props.id ))}>
+            <div onClick={() => dispatch(push('/users/' + uid + '/menus/' + props.id))}>
                 {/*テキストを入れるための箱 colorとcomponentを指定できる　componentはタグ(p,h2など)を指定できる */}
                 <Typography color="textSecondary" component="p">
                     {props.name}

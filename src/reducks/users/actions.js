@@ -6,7 +6,8 @@ export const signInAction = (userState) => {
             isSignedIn: true,
             uid: userState.uid,
             username: userState.username,
-            role: userState.role
+            role: userState.role,
+            // menus: userState.menus
         }
     }
 };
@@ -19,7 +20,24 @@ export const signOutAction = () => {
             isSignedIn: false,
             uid: "",
             username: "",
-            role: ""
+            role: "",
+            // menus: []
         }
+    }
+};
+
+export const FETCH_MENUS = "FETCH_MENUS";
+export const fetchMenusAction = (menus) => {
+    return{
+        type: "FETCH_MENUS",
+        payload: menus
+    }
+};
+
+export const DELETE_MENU = "DELETE_MENU";
+export const deleteMenuAction =(menus) => {
+    return{
+        type: "DELETE_MENU",
+        payload: menus
     }
 };

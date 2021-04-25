@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { MenuCard } from '../components/Products/index';
-import { fetchMenus } from '../reducks/menus/operetions';
+import { fetchMenus } from '../reducks/users/operetions';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMenus } from '../reducks/menus/selectors';
+import { getMenus } from '../reducks/users/selectors';
 import { push } from 'connected-react-router';
 
 const MenusList = () => {

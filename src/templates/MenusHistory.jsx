@@ -1,7 +1,7 @@
 import React,{useEffect} from 'react';
 import { useDispatch,useSelector } from 'react-redux';
-import { fetchMenus } from '../reducks/menus/operetions';
-import { getMenus } from '../reducks/menus/selectors';
+import { fetchMenus } from '../reducks/users/operetions';
+import { getMenus } from '../reducks/users/selectors';
 import { FixedHeader } from '../components/Products/index';
 
 const MenusHistory = () => {

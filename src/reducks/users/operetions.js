@@ -1,6 +1,6 @@
 //複雑な処理を任せる　redux-thunkで非同期処理を行う場所 actionsを呼び出す
 
-import { signInAction, signOutAction } from "./actions";
+import { signInAction, signOutAction,fetchMenusAction,deleteMenuAction } from "./actions";
 import { push } from 'connected-react-router';
 import { auth,db,FirebaseTimestamp } from '../../firebase/index';
 
@@ -42,7 +42,8 @@ export const listenAuthState = () => {
                             uid: uid,
                             isSignedInd: true,
                             role: data.role,
-                            username: data.username
+                            username: data.username,
+                            // menus: data.menus
                             }))
                 })
             //userがいなかった場合(ログインしていない)はログイン画面に切り替える
@@ -160,18 +161,6 @@ export const reset = (email) => {
     }
 }
 
-//user編集　firebase公式 updateProfileメソッド
-// var user = firebase.auth().currentUser;
-
-// user.updateProfile({
-//   displayName: "Jane Q. User",
-//   photoURL: "https://example.com/jane-q-user/profile.jpg"
-// }).then(function() {
-//   // Update successful.
-// }).catch(function(error) {
-//   // An error happened.
-// });
-
 export const updateUser = (userId,name,email) => {
     return async(dispatch) => {
         // validate
@@ -196,3 +185,87 @@ export const updateUser = (userId,name,email) => {
             })
     }
 };
+
+//Menu作成
+export const saveMenus = (id,name,description,category,images) => {
+    return async(dispatch,getState) => {
+
+        console.log(id)
+
+        const uid = getState().users.uid;
+
+        //validate
+        if(name === "" || description === "" || category === ""){
+            alert("未入力の項目があります")
+            return false
+        }
+
+        const timeStamp = FirebaseTimestamp.now();
+
+        const data = {
+            name: name,
+            description: description,
+            category: category,
+            updated_at: timeStamp,
+            images: images,
+        }
+
+        // debugger
+
+        //ここは新規作成の時だけ実行する処理
+        //doc()で引数に何も渡さないとidが自動採番される
+        if(id === ""){
+            const ref = db.collection('users').doc(uid).collection('menus').doc();
+            //上記で採番されたidを取り出していdataに入れている
+            id = ref.id
+            data.id = id
+            data.created_at = timeStamp
+        }
+
+        //setの第二引数に{merge: true}を渡すことで変更されたところだけを更新する
+        //上記のidを指定してdataをdbに保存している
+        return db.collection('users').doc(uid).collection('menus').doc(id).set(data, {merge: true})
+            .then(()=> {
+                dispatch(push('/'))
+            }).catch((error) => {
+                throw new Error(error)
+            })
+    }
+};
+
+//リスト表示するためのメソッド
+export const fetchMenus = () => {
+    return async(dispatch,getState) => {
+
+        const uid = getState().users.uid;
+
+        //orderByはソートするメソッド引数は1.並び替えの基準2.降順、昇順か
+        db.collection('users').doc(uid).collection('menus').orderBy('updated_at','desc').get()
+            .then(snapshots => {
+                const menusList = []
+                snapshots.forEach(snapshot => {
+                    const menu = snapshot.data();
+                    menusList.push(menu)
+                })
+                dispatch(fetchMenusAction(menusList))
+            })
+    }
+}
+
+//メニューを削除するためのメソッド
+export const deleteMenu = (id) => {
+    return async(dispatch,getState) => {
+
+        const uid = getState().users.uid;
+
+        db.collection('users').doc(uid).collection('menus').doc(id).delete()
+            .then(()=> {
+                //getStateは現在のstoreのstate情報をoperation内で取得できる
+                //prevMenusに現在のmenusの情報を入れている
+                const prevMenus = getState().users.menus;
+                //filterでmenusのidが削除したいidとは別のものを新たに作成している
+                const nextMenus = prevMenus.filter(menu => menu.id !== id)
+                dispatch(deleteMenuAction(nextMenus))
+        })
+    }
+}

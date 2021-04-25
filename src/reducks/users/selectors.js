@@ -21,4 +21,9 @@ export const getUserId = createSelector(
     state => state.uid
 );
 
+export const getMenus = createSelector(
+    [usersSelector],
+    state => state.menus
+);
+
 //getUserIdを使用すると現在のusersのuidを取り出すことができる
