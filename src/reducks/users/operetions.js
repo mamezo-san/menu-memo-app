@@ -1,6 +1,6 @@
 //複雑な処理を任せる　redux-thunkで非同期処理を行う場所 actionsを呼び出す
 
-import { signInAction, signOutAction,fetchMenusAction,deleteMenuAction } from "./actions";
+import { signInAction, signOutAction,fetchMenusAction,deleteMenuAction,searchMenusAction } from "./actions";
 import { push } from 'connected-react-router';
 import { auth,db,FirebaseTimestamp } from '../../firebase/index';
 
@@ -187,12 +187,11 @@ export const updateUser = (userId,name,email) => {
 };
 
 //Menu作成
-export const saveMenus = (id,name,description,category,images) => {
+export const saveMenus = (id,name,description,category,images,word) => {
     return async(dispatch,getState) => {
 
-        console.log(id)
-
         const uid = getState().users.uid;
+
 
         //validate
         if(name === "" || description === "" || category === ""){
@@ -202,8 +201,23 @@ export const saveMenus = (id,name,description,category,images) => {
 
         const timeStamp = FirebaseTimestamp.now();
 
+        
+        function strMapToObj(strMap) {
+            let obj = Object.create(null);
+            for (let [k,v] of strMap) {
+              obj[k] = v;
+            }
+            return obj;
+          }
+    
+        console.log(word);
+
+        const objectWord = strMapToObj(word)
+        console.log(objectWord);
+
         const data = {
             name: name,
+            word: objectWord,
             description: description,
             category: category,
             updated_at: timeStamp,
@@ -234,21 +248,23 @@ export const saveMenus = (id,name,description,category,images) => {
 };
 
 //リスト表示するためのメソッド
-export const fetchMenus = () => {
+export const fetchMenus = (category) => {
     return async(dispatch,getState) => {
 
         const uid = getState().users.uid;
 
         //orderByはソートするメソッド引数は1.並び替えの基準2.降順、昇順か
-        db.collection('users').doc(uid).collection('menus').orderBy('updated_at','desc').get()
-            .then(snapshots => {
-                const menusList = []
-                snapshots.forEach(snapshot => {
-                    const menu = snapshot.data();
-                    menusList.push(menu)
+        let query = db.collection('users').doc(uid).collection('menus').orderBy('updated_at','desc')
+        query = (category !== "" && category !== undefined )? query.where("category", "==", category) : query
+            query.get()
+                 .then(snapshots => {
+                    const menusList = []
+                    snapshots.forEach(snapshot => {
+                        const menu = snapshot.data();
+                        menusList.push(menu)
+                    })
+                    dispatch(fetchMenusAction(menusList))
                 })
-                dispatch(fetchMenusAction(menusList))
-            })
     }
 }
 
@@ -269,3 +285,46 @@ export const deleteMenu = (id) => {
         })
     }
 }
+
+//メニュー検索
+export const searchMenus = (search) => {
+    return async(dispatch,getState) => {
+        const uid = getState().users.uid;
+
+
+        //error　検索が二文字などだと表示されない　=> searchGrumで作成される一文字の単語が問題？
+        let searchGrums = [];
+        const nGrum = (name,n) => {
+            for(let i=0; i<name.length; i++){
+                const results = [name.substr(i,n)]
+                results.map(result => {
+                    return searchGrums.push(result)
+            })}
+        };
+        nGrum(search,2);
+        // nGrum(search,3);
+        searchGrums = searchGrums.filter(searchGrum => {
+            return searchGrum.length > 1 
+        });
+        console.log(searchGrums);
+
+        //orderByはソートするメソッド引数は1.並び替えの基準2.降順、昇順か
+        let query = db.collection('users').doc(uid).collection('menus').limit(30);
+        //searchGrumはおけ　やはりwordをmap形で保存して...
+        searchGrums.forEach(searchGrum => {
+            query = (search !== "" && search !== undefined )? query.where(`word.${searchGrum}`, "==", true) : query
+            query.get()
+                 .then(snapshots => {
+                    const menusList = []
+                    snapshots.forEach(snapshot => {
+                        const menu = snapshot.data();
+                        menusList.push(menu)
+                        console.log(menusList);
+                    })
+                    dispatch(searchMenusAction(menusList))
+                })
+                
+                })
+
+    }
+};

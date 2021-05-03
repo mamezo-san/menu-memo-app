@@ -46,7 +46,7 @@ const returnCodeToBr = (text) => {
 
 const MenusDetail = () => {
 
-    const classes = useStyles;
+    const classes = useStyles();
 
     const selector = useSelector((state)=> state);
     const uid = getUserId(selector);
@@ -63,29 +63,18 @@ const MenusDetail = () => {
                 setMenu(data)
             })
     },[]);
-    
-
-    // useEffect(() => {
-    //     db.collection('users').doc(uid).collection('menus').doc(id).get()
-    //         .then(doc => {
-    //             const data = doc.data();
-    //             setMenu(data)
-    //         })
-    // },[]);
 
   return(
     <section>
         {menu && (
-            <div>
+            <div className="flex-menus"> 
                 <div className={classes.sliderBox}> 
-                    <ImageSwiper images={menu.images} />
+                    <ImageSwiper images={menu.images} className="image-size" />
                 </div>
                 <div className={classes.detail}>
                     <h2>{menu.name}</h2>
                     <div className="space-small" />
                     <p>{returnCodeToBr(menu.description)}</p>
-                    {console.log(menu.description)}
-                    {console.log(menu.images)}
                 </div>
             </div>
         )}

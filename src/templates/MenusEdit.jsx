@@ -17,7 +17,9 @@ const MenusEdit = () => {
           [name,setName] = useState(""),
           [description,setDescription] = useState(""),
           [category,setCategory] = useState(""),
+          [categories,setCategories] = useState(""),
           [images,setImages] = useState([]),
+          [word,setWord] = useState(""),
           [recipe,setRecipe] = useState("");
 
     const inputName = useCallback((event) => {
@@ -59,20 +61,57 @@ const MenusEdit = () => {
         }
     },[]);
 
-    //SelectBoxに入るoptionsの値、実際はデータベースに保存して使う？、連想配列(objectっぽい配列)
-    const categories = [
-        {id: "japanese", name: "和食"},
-        {id: "chinese", name: "中華"},
-        {id: "westernFood",name: "洋食"}
-    ];
+    useEffect(()=> {
+        db.collection('categories')
+          .orderBy('order','asc')
+          .get()
+          .then(snapshots => {
+              const list = [];
+              snapshots.forEach(snapshot => {
+                  const data = snapshot.data();
+                  list.push({
+                      id: data.id,
+                      name: data.name
+                  })
+              })
+              setCategories(list)
+          })
+    },[]);
+
+    let tokenMap = new Map();
+    const nGrum = (name,n) => {
+        // const n = name.length();
+        for(let i=0; i<name.length; i++){
+            const results = [name.substr(i,n)]
+            results.map(result => {
+                // return word.push(result);
+                return tokenMap.set(result,true);
+        })}
+    };
+
+    useEffect(()=> {
+        nGrum(name,2);
+        // nGrum(name,3);
+        return setWord(tokenMap)
+    },[name]);
+
+    // const ruby = ["ka","ni","i"]
+    // const rails = "おじさん"
+    // console.log(rails.length);
+
+    // const is = ["iti","ni","san"];
+    // const isfile = is.filter(i=> {
+    //     return i.length > 2
+    // });
+
+    // console.log(isfile);
+    
 
   return(
-    <section >
-      <h2>メニューの登録、編集</h2>
-      <div>
-          <div>
-              <ImageArea images={images} setImages={setImages} />
-          </div>
+    <section>
+      <h2 className="text-title-center">メニューの登録、編集</h2>
+      <div className="text-line-center">
+            <ImageArea images={images} setImages={setImages} />
             <TextInput 
             fullWidth={true} rows={1} value={name} multiline={false}
             type={"text"} label={"メニュー名"} required={true} onChange={inputName}
@@ -91,9 +130,9 @@ const MenusEdit = () => {
            />  */}
       </div>
       <div className="space-large" />
-      <div>
+      <div  className="text-title-center">
           <PrimaryButton label={"メニューを登録する"} onClick={() =>
-             dispatch(saveMenus(id,name,description,category,images))} />
+             dispatch(saveMenus(id,name,description,category,images,word))} />
       </div>
     </section>
   )

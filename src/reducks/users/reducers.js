@@ -17,6 +17,11 @@ export const UserReducers = (state=initialState.users, action) => {
                 ...state,
                 menus: [...action.payload]
             };
+        case Actions.SEARCH_MENUS:
+            return{
+                ...state,
+                menus: [...action.payload]
+            };
         case Actions.DELETE_MENU:
             return{
                 ...state,

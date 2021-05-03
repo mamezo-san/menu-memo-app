@@ -28,7 +28,7 @@ const SelectBox = (props) => {
             //onChangeはuseCallbackに近い、そのためpropsではset~を渡す
             onChange={(event) => props.select(event.target.value)}
         >
-            {props.options.map(option => (
+            {(props.options.length > 0) && props.options.map(option => (
                 //MenuItemはSelectboxで実際に選べるカテゴリーになる
                 <MenuItem key={option.id} value={option.id}>
                     {option.name}

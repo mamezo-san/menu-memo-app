@@ -1,4 +1,15 @@
 {
-  "indexes": [],
+  "indexes": [
+    // {
+    //   "collectionGroup": "menus",
+    //   "queryScope": "COLLECTION",
+    //   "fields": [
+    //     {
+    //       "fieldPath": "word",
+    //       "order": "ASCENDING"
+    //     }
+    //   ]
+    // }
+  ],
   "fieldOverrides": []
 }

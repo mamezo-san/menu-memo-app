@@ -34,6 +34,14 @@ export const fetchMenusAction = (menus) => {
     }
 };
 
+export const SEARCH_MENUS = "SEARCH_MENUS";
+export const searchMenusAction = (menus) => {
+    return{
+        type: "SEARCH_MENUS",
+        payload: menus
+    }
+};
+
 export const DELETE_MENU = "DELETE_MENU";
 export const deleteMenuAction =(menus) => {
     return{

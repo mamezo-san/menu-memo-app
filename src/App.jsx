@@ -1,6 +1,7 @@
 import React from 'react';
 import Router from './Router';
 import { Header } from './components/Header/index';
+import { Footer } from './components/Footer/index';
 //CSS適用する場合はここにimport
 import "./assets/style.css"
 // import "./assets/reset.css"
@@ -10,9 +11,10 @@ const App = () => {
   return(
     <>
       <Header />
-      <main className="app-padding">
+      <main className="main-padding">
         <Router />
       </main>
+      <Footer />
     </>
   );
 };

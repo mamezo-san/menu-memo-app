@@ -8,3 +8,4 @@ export { default as MenusDetail } from './MenusDetail';
 export { default as UserDetail } from './UserDetail';
 export { default as UserEdit } from './UserEdit';
 export { default as MenusHistory } from './MenusHistory';
+export { default as Inquiry } from './Inquiry';

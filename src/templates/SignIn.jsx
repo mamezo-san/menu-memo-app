@@ -23,27 +23,29 @@ const SignIn = () => {
     
   return(
     <div>
-        <h2>サインイン画面</h2>
-        <TextInput
-            fullWidth={true} label={"メールアドレス"} value={email} rows={1}
-            multiLine={false} required={true} type={"email"} onChange={inputEmail}
-        />
-        <TextInput
-            fullWidth={true} label={"パスワード"} value={password} rows={1}
-            multiLine={false} required={true} type={"password"} onChange={inputPassword}
-        />
-        <div>
+        <h2 className="text-title-center">サインイン画面</h2>
+        <div className="text-line-center">
+            <TextInput
+                fullWidth={true} label={"メールアドレス"} value={email} rows={1}
+                multiLine={false} required={true} type={"email"} onChange={inputEmail}
+            />
+            <TextInput
+                fullWidth={true} label={"パスワード"} value={password} rows={1}
+                multiLine={false} required={true} type={"password"} onChange={inputPassword}
+            />
+        </div>
+        <div className="text-title-center"> 
             <PrimaryButton
                 //onClickでdispatchでoperationsのsignUpに飛ぶ、その時にここで入力されたusernameたちを持って行ってる
                 label={"サインイン"}　onClick={() => dispatch(signIn(email,password)) }
             />
         </div>
-        <div>
+        <div className="text-title-center">
             <p onClick={() => dispatch(push('/signin/reset'))}>
                 パスワードを忘れた方はここをクリック
             </p>
         </div>
-        <div>
+        <div className="text-title-center">
             <p onClick={() => dispatch(push('/signup'))}>
                 アカウントをお持ちで無い方はここをクリック
             </p>

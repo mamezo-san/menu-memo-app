@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Route,Switch } from 'react-router';
-import { MenusList,SignIn,SignUp,Reset,MenusEdit,MenusDetail,UserDetail,UserEdit,MenusHistory } from './templates/index';
+import { MenusList,SignIn,SignUp,Reset,MenusEdit,MenusDetail,UserDetail,UserEdit,MenusHistory,Inquiry } from './templates/index';
 import Auth from './Auth';
 
 const  Router = () => {
@@ -12,6 +12,7 @@ const  Router = () => {
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signin/reset" component={Reset} />
+        <Route exact path="/inquiry/form" component={Inquiry} />
 
         {/*認証後しか行わさせたくいない画面をAuthで囲む*/}
         <Auth>

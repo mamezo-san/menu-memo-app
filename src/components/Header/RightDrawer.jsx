@@ -1,4 +1,4 @@
-import React,{useState,useCallback} from 'react';
+import React,{useState,useCallback,useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -14,9 +14,10 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { TextInput } from '../UIkit/index';
 import { push } from 'connected-react-router';
 import { useDispatch,useSelector } from 'react-redux';
-import { signOut } from '../../reducks/users/operetions';
+import { signOut,searchMenus } from '../../reducks/users/operetions';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { getUserId } from '../../reducks/users/selectors';
+import {db} from '../../firebase/index';
 
 const useStyles = makeStyles((theme)=> ({
   drawer: {
@@ -61,9 +62,39 @@ const RightDrawer = (props) => {
     { func: selectMenu, label: "ユーザー情報", icon: <AccountCircleIcon />  , id: "account", value: "/user/" + userId}
   ];
 
+
+  const [filters,setFilters] = useState([
+    { func: selectMenu,label: "全て",id: "all",value: ""},
+  ])
+
+  useEffect(() => {
+    db.collection('categories')
+      .orderBy('order','asc')
+      .get()
+      .then(snapshots => {
+        const list = [];
+        snapshots.forEach(snapshot => {
+          const category = snapshot.data()
+          list.push({
+            func: selectMenu, label: category.name, id: category.id, value: `/?category=${category.id}`
+          })
+        })
+        setFilters((prevState) => [...prevState,...list])
+      });
+  },[]);
+
+
   const inputSearch = useCallback((event) => {
     setSearch(event.target.value)
   },[setSearch]);
+
+
+  //ダメだったらここを戻す
+  const changeSearch = useCallback((event,search) => {
+    dispatch(push(`/?search=${search}`))
+    props.onClose(event)
+  },[search,setSearch]);
+  
 
   return(
     <nav className={classes.drawer}>
@@ -87,7 +118,9 @@ const RightDrawer = (props) => {
               onChange={inputSearch}
             />
             <IconButton>
-              <SearchIcon />
+              {/* ここも変更点 ドロワーをクローズする関数も追加 */}
+              <SearchIcon onClick={(e) => changeSearch(e,search)} />
+              {/* <SearchIcon onClick={() => dispatch(searchMenus(search))} /> */}
             </IconButton>
           </div>
           <Divider />
@@ -108,6 +141,19 @@ const RightDrawer = (props) => {
               {/*primaryは表示するテキスト */}
               <ListItemText primary={"ログアウト"} />
             </ListItem>
+          </List>
+          <Divider />
+          <List>
+            {filters.map(filter => (
+            <React.Fragment key={filter.id}>
+              <ListItem
+                button 
+                onClick={(e) => filter.func(e,filter.value)}
+                >
+                <ListItemText primary={filter.label} />
+              </ListItem>
+            </React.Fragment>
+            ))}
           </List>
         </div>
       </Drawer>

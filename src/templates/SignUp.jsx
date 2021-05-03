@@ -33,30 +33,32 @@ const SignUp = () => {
     
   return(
     <div>
-        <h2>アカウント作成画面</h2>
-        <TextInput
-            fullWidth={true} label={"ユーザー名"} value={username} rows={1}
-            multiLine={false} required={true} type={"text"} onChange={inputUsername}
-        />
-        <TextInput
-            fullWidth={true} label={"メールアドレス"} value={email} rows={1}
-            multiLine={false} required={true} type={"email"} onChange={inputEmail}
-        />
-        <TextInput
-            fullWidth={true} label={"パスワード"} value={password} rows={1}
-            multiLine={false} required={true} type={"password"} onChange={inputPassword}
-        />
-        <TextInput
-            fullWidth={true} label={"確認用パスワード"} value={confirmPassword} rows={1}
-            multiLine={false} required={true} type={"password"} onChange={inputConfirmPassword}
-        />
-        <div>
+        <h2 className="text-title-center">アカウント作成画面</h2>
+        <div className="text-line-center">
+            <TextInput
+                fullWidth={true} label={"ユーザー名"} value={username} rows={1}
+                multiLine={false} required={true} type={"text"} onChange={inputUsername}
+            />
+            <TextInput
+                fullWidth={true} label={"メールアドレス"} value={email} rows={1}
+                multiLine={false} required={true} type={"email"} onChange={inputEmail}
+            />
+            <TextInput
+                fullWidth={true} label={"パスワード"} value={password} rows={1}
+                multiLine={false} required={true} type={"password"} onChange={inputPassword}
+            />
+            <TextInput
+                fullWidth={true} label={"確認用パスワード"} value={confirmPassword} rows={1}
+                multiLine={false} required={true} type={"password"} onChange={inputConfirmPassword}
+            />
+        </div>
+        <div className="text-title-center">
             <PrimaryButton
                 //onClickでdispatchでoperationsのsignUpに飛ぶ、その時にここで入力されたusernameたちを持って行ってる
                 label={"アカウントを登録する"}　onClick={() => dispatch(signUp(username,email,password,confirmPassword)) }
             />
         </div>
-        <div>
+        <div className="text-title-center">
             <p onClick={() => dispatch(push('/signin'))}>
                 アカウントをお持ちの方はここをクリック
             </p>
