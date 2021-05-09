@@ -1,25 +1,28 @@
 import React from 'react';
 import Divider from '@material-ui/core/Divider'
-import { useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
+import { Inquiry } from '../../templates';
 
+const qiita_key = process.env.REACT_APP_qiita_key
+const twitter_key = process.env.REACT_APP_twitter_key
 
 const Footer = () => {
-
-    const dispatch = useDispatch();
 
   return(
     <>
       <Divider />
-      <ul>
+      <ul className="flex-footer">
           <li>
-              運営
+            <a href={qiita_key} target="_blank" alt="Qiitaリンク">
+                Qiita
+            </a>
           </li>
           <li>
+            <a href={twitter_key} target="_blank" alt="twitterリンク">
               twitter
+            </a>
           </li>
-          <li onClick={() => dispatch(push('/inquiry/form'))}>
-              お問い合わせ
+          <li >
+            <Inquiry />
           </li>
       </ul>
     </>

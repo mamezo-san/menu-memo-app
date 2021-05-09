@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import HTMLReactParser from 'html-react-parser';
 import { ImageSwiper } from '../components/Products/index';
 import { getUserId } from '../reducks/users/selectors';
+import { FullscreenExit } from '@material-ui/icons';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     },
     detail: {
         textAlign: 'left',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
         [theme.breakpoints.down('sm')]: {
             margin: '0 auto 16px auto',
             height: 320,
@@ -56,6 +60,12 @@ const MenusDetail = () => {
 
     const [menu,setMenu] = useState(null);
 
+    const sites =[
+        {id: "kurasiru" ,      name: "クラシル",       path: "https://www.kurashiru.com/search?query="},
+        {id: "cookpad" ,       name: "クックパッド",    path: "https://cookpad.com/search/"},
+        {id: "delishkitchen" , name: "DELISH KITCHEN",path:"https://delishkitchen.tv/search?q="},
+    ];
+
     useEffect(() => {
         db.collection('users').doc(uid).collection('menus').doc(id).get()
             .then(doc => {
@@ -72,9 +82,19 @@ const MenusDetail = () => {
                     <ImageSwiper images={menu.images} className="image-size" />
                 </div>
                 <div className={classes.detail}>
-                    <h2>{menu.name}</h2>
+                    <h2 className="menu-detail-name">
+                        {menu.name}
+                    </h2>
                     <div className="space-small" />
                     <p>{returnCodeToBr(menu.description)}</p>
+                    <div className="space-large" />
+                    <div>
+                        {sites.map(site => (
+                            <div>
+                                <a href={site.path + menu.name} target="_blank" key={site.id} >{menu.name}のレシピを{site.name}で検索する</a>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         )}

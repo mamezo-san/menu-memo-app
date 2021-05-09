@@ -6,6 +6,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { getIsSignedIn } from '../../reducks/users/selectors';
 import { push } from 'connected-react-router';
 import { HeaderIcons,RightDrawer } from './index';
+import logo from '../../assets/img/src/logo3.jpg';
 
 const useStyles = makeStyles({
     root: {
@@ -49,7 +50,8 @@ const Header = () => {
         {/*positionでAppBarの位置を決めることができる(fixedは上部で固定) */}
         <AppBar position='fixed' className={classes.menuBar}>
             <Toolbar className={classes.toolBar}>
-                <h2 onClick={() => dispatch(push('/'))}>Menu Memo</h2>
+                <img src={logo} alt="Menu Memo" className="header-title" onClick={() => dispatch(push('/'))} />
+                    {/* Menu Memo</h2> */}
                 {/*条件分岐でサインインしていたらHeaderIconsを表示 */}
                 {isSignedIn && (
                     <div className={classes.iconButtons}>

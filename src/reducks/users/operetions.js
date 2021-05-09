@@ -3,6 +3,9 @@
 import { signInAction, signOutAction,fetchMenusAction,deleteMenuAction,searchMenusAction } from "./actions";
 import { push } from 'connected-react-router';
 import { auth,db,FirebaseTimestamp } from '../../firebase/index';
+import { PostAdd } from "@material-ui/icons";
+
+// require('dotenv').config();
 
 //基本的な文法　関数を書く
 // export const signIn = (email,password) => {
@@ -328,3 +331,31 @@ export const searchMenus = (search) => {
 
     }
 };
+
+export const sendSlack = (name,email,description) => {
+    return async(dispatch) => {
+        //validate 
+        if(name === "" || email === "" || description === ""){
+            alert ("未入力の欄があります")
+            return false 
+        }
+        //validate email形式確認追加
+
+        const payload = {
+            text: "menu-memo-appよりメッセージがありました\n"+
+                  "お名前：" + name + '\n'+
+                  "email：" + email + '\n'+
+                  "本文：" + description
+        };
+        //下記はプライベートのためgitにあげる際は環境変数の設定を行う
+        const url = process.env.REACT_APP_slack_key;
+
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        }).then(() => {
+            alert("slackでメッセージを送信しました")
+            
+        })
+    }
+}

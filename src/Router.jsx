@@ -12,7 +12,7 @@ const  Router = () => {
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/signin/reset" component={Reset} />
-        <Route exact path="/inquiry/form" component={Inquiry} />
+        {/* <Route exact path="/inquiry/form" component={Inquiry} /> */}
 
         {/*認証後しか行わさせたくいない画面をAuthで囲む*/}
         <Auth>

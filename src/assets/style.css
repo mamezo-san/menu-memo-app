@@ -3,8 +3,19 @@
     flex-direction: row;
     flex-flow: wrap;
 }
+.section-style{
+    padding: 0 5%;
+}
+.header-title{
+    width: 130px;
+    /* margin-top: 14px; */
+}
 .main-padding{
     padding: 100px 0 ;
+}
+.menu-detail-name{
+    font-size: x-large;
+    font-weight: bold;
 }
 /* space_item */
 .space-small{
@@ -60,4 +71,19 @@
     left: 0;
     width: 100%;
     height: auto;
+}
+.flex-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    list-style-type: none;
+    height: 60px;
+}
+.menu-add-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
 }
