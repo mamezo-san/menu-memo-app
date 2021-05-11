@@ -66,9 +66,9 @@ const Inquiry = () => {
 
   return (
     <div>
-      <li onClick={handleClickOpen}>
+      <p onClick={handleClickOpen}>
         お問い合わせ
-      </li>
+      </p>
       <Dialog
         open={open}
         onClose={handleClose}

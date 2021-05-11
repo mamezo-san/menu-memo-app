@@ -118,9 +118,7 @@ const RightDrawer = (props) => {
               onChange={inputSearch}
             />
             <IconButton>
-              {/* ここも変更点 ドロワーをクローズする関数も追加 */}
               <SearchIcon onClick={(e) => changeSearch(e,search)} />
-              {/* <SearchIcon onClick={() => dispatch(searchMenus(search))} /> */}
             </IconButton>
           </div>
           <Divider />

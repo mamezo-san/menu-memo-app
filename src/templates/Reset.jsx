@@ -18,18 +18,21 @@ const Reset = () => {
     
   return(
     <div>
-        <h2>パスワードリセット</h2>
-        <TextInput
-            fullWidth={true} label={"メールアドレス"} value={email} rows={1}
-            multiLine={false} required={true} type={"email"} onChange={inputEmail}
-        />
-        <div>
+        <h2 className="text-title-center">パスワードリセット</h2>
+        <div className="text-line-center">
+            <TextInput
+                fullWidth={true} label={"メールアドレス"} value={email} rows={1}
+                multiLine={false} required={true} type={"email"} onChange={inputEmail}
+            />
+        </div>
+        <div className="text-title-center">
             <PrimaryButton
                 //onClickでdispatchでoperationsのsignUpに飛ぶ、その時にここで入力されたusernameたちを持って行ってる
                 label={"パスワードをリセットする"}　onClick={() => dispatch(reset(email)) }
             />
         </div>
-        <div>
+        <div className="space-small" />
+        <div className="text-title-center">
             <p onClick={() => dispatch(push('/signin'))}>
                 ログイン画面に戻る
             </p>

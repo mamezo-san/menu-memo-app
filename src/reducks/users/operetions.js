@@ -130,6 +130,7 @@ export const signUp = (username,email,password,confirmPassword) => {
                     //登録したらホームに戻る処理を記述している
                         .then(() => {
                             dispatch(push('/'))
+                            alert("アカウントを登録しました")
                         })
                 }
             })

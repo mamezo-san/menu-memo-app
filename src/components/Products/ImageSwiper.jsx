@@ -16,11 +16,11 @@ const ImageSwiper = (props) => {
         },
         //次へボタンと前へボタンを定義している
         navigation: {
-            nextEl: 'swiper-button-next',
-            prevEl: 'swiper-button-prev'
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
         },
         loop: true
-    })
+    });
 
     const images = props.images;
     
@@ -33,8 +33,8 @@ const ImageSwiper = (props) => {
           </div>
       ) :(
           images.map(image => (
-             <div className="p-media__thumb">
-                 <img　key={image.id} src={image.path} alt="メニュー画像" />
+             <div className="p-media__thumb" key={image.id}>
+                 <img　src={image.path} alt="メニュー画像" />
              </div> 
           ))
       )}

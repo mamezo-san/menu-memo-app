@@ -40,15 +40,23 @@ const SignIn = () => {
                 label={"サインイン"}　onClick={() => dispatch(signIn(email,password)) }
             />
         </div>
+        <div className="space-small" />
         <div className="text-title-center">
-            <p onClick={() => dispatch(push('/signin/reset'))}>
-                パスワードを忘れた方はここをクリック
+            <p className="sign-click" onClick={() => dispatch(push('/signin/reset'))}>
+                パスワードを忘れた方はこちら
             </p>
         </div>
         <div className="text-title-center">
-            <p onClick={() => dispatch(push('/signup'))}>
-                アカウントをお持ちで無い方はここをクリック
+            <p className="sign-click" onClick={() => dispatch(push('/signup'))}>
+                アカウントをお持ちで無い方はこちら
             </p>
+        </div>
+        <div className="space-medium" />
+        <div>
+            *サンプルemail: sample@yhooo.com
+        </div>
+        <div>
+            *サンプルpassword: 12345678
         </div>
     </div>
   )

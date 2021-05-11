@@ -79,14 +79,14 @@ const MenuCard = (props) => {
 
     const classes = useStyles();
 
-    const [modal,setModal] = useState("");
+    const [anchorEl,setAnchorEl] = useState("");
 
     const handleClick = (event) => {
-        setModal(event.currentTarget)
+        setAnchorEl(event.currentTarget)
     };
 
     const handleClose = () => {
-        setModal(null)
+        setAnchorEl(null)
     };
 
   return(
@@ -115,9 +115,9 @@ const MenuCard = (props) => {
             {/*クリックした時に開かれるもの */}
             {/*要復習 */}
             <Menu
-                modal={modal}
+                anchorEl={anchorEl}
                 keepMounted
-                open={Boolean(modal)}
+                open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
                 <MenuItem

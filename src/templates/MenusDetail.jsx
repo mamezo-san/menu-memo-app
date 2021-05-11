@@ -90,8 +90,8 @@ const MenusDetail = () => {
                     <div className="space-large" />
                     <div>
                         {sites.map(site => (
-                            <div>
-                                <a href={site.path + menu.name} target="_blank" key={site.id} >{menu.name}のレシピを{site.name}で検索する</a>
+                            <div key={site.id}>
+                                <a href={site.path + menu.name} target="_blank" >{menu.name}のレシピを{site.name}で検索する</a>
                             </div>
                         ))}
                     </div>
