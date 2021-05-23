@@ -1,4 +1,26 @@
-# Getting Started with Create React App
+# App-name: Menu memo
+  url: "https://menu-app-72873.web.app"
+
+# description
+  Menu memoは自宅で作った自信作のご飯や、日々のご飯の写真など自分の作ったご飯を見やすく記録しておくためのメモ帳アプリです。
+
+# What can app do 
+  Menu memoでは料理名、料理の説明、料理画像の保存が行える。また保存した料理を一覧下でき、詳細ページにはレシピサイトへのリンクが作成されるためすぐにレシピを確認することができる。一覧ページではカテゴリ別のメニューの表示、メニュータイトルの検索が可能となっている。
+
+# strength
+  タイトル検索機能はfirestoreのみで実装されているため、高パフォーマンスであなたを待たせることはないでしょう。
+
+# image
+[Menu-memo-image](https://user-images.githubusercontent.com/75872704/119246321-9e0f1880-bbbb-11eb-9d13-41265b5a3761.png)
+
+# used
+* react
+* redux
+* firebase
+
+
+
+<!-- # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -67,4 +89,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 ### `yarn build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->
